@@ -6,6 +6,7 @@ backend:
         - npm install
     build:
       commands:
+        - amplifyPush --simple
         - npm run build
         - npx tsc --project ./tsconfig.json
         - npx webpack --config webpack.config.js --mode production
@@ -16,7 +17,7 @@ backend:
   cache:
     paths:
       - node_modules/**/*
-      
+
 frontend:
   phases:
     preBuild:

@@ -1,4 +1,22 @@
 version: 1
+backend:
+  phases:
+    preBuild:
+      commands:
+        - npm install
+    build:
+      commands:
+        - npm run build
+        - npx tsc --project ./tsconfig.json
+        - npx webpack --config webpack.config.js --mode production
+  artifacts:
+    baseDirectory: dist
+    files:
+      - '**/*'
+  cache:
+    paths:
+      - node_modules/**/*
+      
 frontend:
   phases:
     preBuild:
@@ -10,26 +28,6 @@ frontend:
         - npm run build
   artifacts:
     baseDirectory: build
-    files:
-      - '**/*'
-  cache:
-    paths:
-      - node_modules/**/*
-
-backend:
-  phases:
-    preBuild:
-      commands:
-        - nvm install 18.13.0
-        - nvm use 18.13.0
-        - npm install
-    build:
-      commands:
-        - npm run build
-        - npx tsc --project ./
-        - npx webpack --config webpack.config.js --mode production
-  artifacts:
-    baseDirectory: dist
     files:
       - '**/*'
   cache:

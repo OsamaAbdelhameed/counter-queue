@@ -74,7 +74,7 @@ const StartServer = () => {
 	const customersCursor = customersCollection.watch();
 
 	server.on("connection", (socket: WebSocket) => {
-		console.log("Client connected");
+		console.log("Client connected successfully");
 
 		// Handle changes to the 'counters' collection
 		countersCursor.on("change", (change) => {

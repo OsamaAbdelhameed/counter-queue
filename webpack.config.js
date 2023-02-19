@@ -60,9 +60,6 @@ module.exports = (env, argv) => {
         },
         plugins: [
             new CleanWebpackPlugin(),
-            new HtmlWebpackPlugin({
-                template: './src/index.html'
-            }),
             new ForkTsCheckerWebpackPlugin({
                 async: isDevMode
             })

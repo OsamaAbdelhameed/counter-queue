@@ -77,7 +77,7 @@ const StartServer = () => {
 		console.log("Client connected");
 
 		// Send a welcome message to the client
-		socket.send("Welcome to the WebSocket server!");
+		// socket.send("Welcome to the WebSocket server!");
 
 		// Handle changes to the 'counters' collection
 		countersCursor.on("change", (change) => {

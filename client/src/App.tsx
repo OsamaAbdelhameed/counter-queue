@@ -11,7 +11,7 @@ const App: React.FC = () => {
 	const [customers, setCustomers] = useState<Customer[]>([]);
 
 	async function fetchData() {
-		fetch("http://localhost:9090/counter/get")
+		fetch("http://localhost:3000/api/counter/get")
 			.then((response) => response.json())
 			.then((data) => {
 				setCounters(data.Counters);

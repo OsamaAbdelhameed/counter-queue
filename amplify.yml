@@ -14,7 +14,7 @@ frontend:
       - '**/*'
   cache:
     paths:
-      - client/node_modules/**/*
+      - node_modules/**/*
 
 backend:
   phases:
@@ -24,10 +24,7 @@ backend:
     build:
       commands:
         - tsc
-        - npx webpack --config webpack.config.js --mode production
-    postBuild:
-      commands:
-        - cp ./dist/server.js ./dist
+        - node dist/server.js
   artifacts:
     baseDirectory: dist
     files:

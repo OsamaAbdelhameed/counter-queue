@@ -1,7 +1,7 @@
 {
     "name": "counter-queue",
     "version": "1.0.0",
-    "description": "intern assignment",
+    "description": "intern assignment for counter queue",
     "main": "server.js",
     "scripts": {
         "start": "node server.js",

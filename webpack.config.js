@@ -8,7 +8,7 @@ module.exports = (env, argv) => {
 
     return {
         mode: isDevMode ? 'development' : 'production',
-        entry: './src/index.tsx',
+        entry: './src/server.tsx',
         output: {
             filename: isDevMode ? 'bundle.js' : '[name].[contenthash].js',
             path: path.resolve(__dirname, 'dist'),

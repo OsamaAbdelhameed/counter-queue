@@ -5,13 +5,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var Counter_1 = __importDefault(require("../models/Counter"));
 var createCounter = function (req, res, next) {
-    var _a = req.body, num = _a.num, name = _a.name, status = _a.status, current = _a.current, history = _a.history;
+    var _a = req.body, num = _a.num, name = _a.name, status = _a.status, online = _a.online, current = _a.current, history = _a.history;
     var counter = new Counter_1.default({
         num: num,
         name: name,
         status: status,
+        online: online,
         current: current,
-        history: history
+        history: history,
     });
     return counter
         .save()

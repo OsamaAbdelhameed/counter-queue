@@ -3,11 +3,16 @@ import mongoose from 'mongoose';
 import Counter from '../models/Counter';
 
 const createCounter = (req: Request, res: Response, next: NextFunction) => {
-    const { num, name, status, current, history } = req.body;
+    const { num, name, status, online, current, history } = req.body;
 
     const counter = new Counter({
-        num, name, status, current, history
-    });
+			num,
+			name,
+			status,
+			online,
+			current,
+			history,
+		});
 
     return counter
         .save()

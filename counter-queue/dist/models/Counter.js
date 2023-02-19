@@ -28,7 +28,8 @@ var CounterSchema = new mongoose_1.Schema({
     num: { type: Number, required: true },
     name: { type: String, required: true },
     status: { type: Boolean, required: true },
+    online: { type: Boolean, required: true },
     current: { type: Number, required: true },
-    history: { type: [Number], required: true }
+    history: { type: [Number], required: true },
 }, { versionKey: false });
-exports.default = mongoose_1.default.model('Counter', CounterSchema);
+exports.default = mongoose_1.default.model("Counter", CounterSchema);

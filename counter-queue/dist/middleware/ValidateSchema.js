@@ -70,27 +70,29 @@ exports.Schemas = {
             branchNo: joi_1.default.number().required(),
             lastIssued: joi_1.default.number().required(),
             inProgress: joi_1.default.array().required(),
-            queue: joi_1.default.array().required()
+            queue: joi_1.default.array().required(),
         }),
         update: joi_1.default.object({
             lastIssued: joi_1.default.number(),
             inProgress: joi_1.default.array(),
-            queue: joi_1.default.array()
-        })
+            queue: joi_1.default.array(),
+        }),
     },
     counter: {
         create: joi_1.default.object({
             num: joi_1.default.number().required(),
             name: joi_1.default.string().required(),
             status: joi_1.default.boolean().required(),
+            online: joi_1.default.boolean().required(),
             current: joi_1.default.number().required(),
-            history: joi_1.default.array().required()
+            history: joi_1.default.array().required(),
         }),
         update: joi_1.default.object({
             name: joi_1.default.string(),
             status: joi_1.default.boolean(),
+            online: joi_1.default.boolean(),
             current: joi_1.default.number(),
-            history: joi_1.default.array()
-        })
-    }
+            history: joi_1.default.array(),
+        }),
+    },
 };

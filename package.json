@@ -4,7 +4,7 @@
     "description": "intern assignment for counter queue",
     "main": "src/server.ts",
     "scripts": {
-        "start": "node dist/server.js",
+        "start": "node ../dist/server.js",
         "postinstall": "tsc",
         "build": "webpack --mode production",
         "test": "jest"

@@ -4,7 +4,7 @@
     "lib": ["es6", "dom"],
     "module": "commonjs",
     "jsx": "react",
-    "outDir": "./dist",
+    "outDir": "./build",
     "rootDir": "./src",
     "strict": true,
     "esModuleInterop": true,

@@ -5,6 +5,7 @@
     "main": "server.js",
     "scripts": {
         "start": "node dist/server.js",
+        "postinstall": "tsc",
         "build": "webpack --mode production",
         "test": "jest"
     },

@@ -29,9 +29,7 @@ const App: React.FC = () => {
 	useEffect(() => {
 		fetchData();
 
-		const socket = new WebSocket(
-			"https://main.d31his4iliekw7.amplifyapp.com/ws"
-		);
+		const socket = new WebSocket("ws://main.d31his4iliekw7.amplifyapp.com/ws");
 		socket.addEventListener("message", (event) => {
 			let newData = JSON.parse(event.data);
 			if (newData.ns.coll === "counters") {

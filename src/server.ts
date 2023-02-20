@@ -17,10 +17,11 @@ mongoose
 		Logging.info("connected to MongoDB");
 		StartServer();
 	})
-	.catch((err) => {
+	.catch((err: any) => {
 		Logging.err("Unable to connect");
 		Logging.err(err);
 	});
+mongoose.set("strictQuery", false);
 
 /** Only start the server if its connected to mongo **/
 const StartServer = () => {
@@ -77,7 +78,7 @@ const StartServer = () => {
 		console.log("Client connected successfully");
 
 		// Handle changes to the 'counters' collection
-		countersCursor.on("change", (change) => {
+		countersCursor.on("change", (change: any) => {
 			console.log("Change:", change);
 
 			// Notify all connected clients of the change
@@ -89,7 +90,7 @@ const StartServer = () => {
 		});
 
 		// Handle changes to the 'customers' collection
-		customersCursor.on("change", (change) => {
+		customersCursor.on("change", (change: any) => {
 			console.log("Change:", change);
 
 			// Notify all connected clients of the change

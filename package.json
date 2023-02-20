@@ -2,7 +2,7 @@
     "name": "counter-queue",
     "version": "1.0.0",
     "description": "intern assignment for counter queue",
-    "main": "server.js",
+    "main": "src/server.ts",
     "scripts": {
         "start": "node dist/server.js",
         "postinstall": "tsc",

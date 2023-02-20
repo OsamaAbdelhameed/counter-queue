@@ -21,7 +21,6 @@ mongoose
 		Logging.err("Unable to connect");
 		Logging.err(err);
 	});
-mongoose.set("strictQuery", false);
 
 /** Only start the server if its connected to mongo **/
 const StartServer = () => {

@@ -11,7 +11,7 @@ module.exports = (env, argv) => {
         entry: './src/server.ts',
         output: {
             filename: isDevMode ? 'bundle.js' : '[name].[contenthash].js',
-            path: path.resolve(__dirname, 'dist'),
+            path: path.resolve(__dirname, 'app/dist'),
             publicPath: '/'
         },
         devtool: isDevMode ? 'inline-source-map' : false,

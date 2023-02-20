@@ -1,5 +1,5 @@
 const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+// const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
@@ -16,7 +16,20 @@ module.exports = (env, argv) => {
         },
         devtool: isDevMode ? 'inline-source-map' : false,
         resolve: {
-            extensions: ['.ts', '.tsx', '.js']
+            extensions: ['.ts', '.tsx', '.js'],
+            fallback: {
+                http: require.resolve('stream-http'),
+                "zlib": require.resolve("browserify-zlib"),
+                "querystring": require.resolve("querystring-es3"),
+                "crypto": require.resolve("crypto-browserify"),
+                "stream": require.resolve("stream-browserify"),
+                assert: require.resolve('assert'),
+                os: require.resolve('os-browserify/browser'),
+                net: require.resolve('net'),
+                url: require.resolve('url'),
+                "fs": false,
+                assert: false
+            }
         },
         module: {
             rules: [{
@@ -60,6 +73,9 @@ module.exports = (env, argv) => {
         },
         plugins: [
             new CleanWebpackPlugin(),
+            // new HtmlWebpackPlugin({
+            //     template: './src/index.html'
+            // }),
             new ForkTsCheckerWebpackPlugin({
                 async: isDevMode
             })

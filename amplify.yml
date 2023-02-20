@@ -7,8 +7,6 @@ backend:
     build:
       commands:
         - npm run build
-        - npx tsc --project ./tsconfig.json
-        - npx webpack --config webpack.config.js --mode production
   artifacts:
     baseDirectory: dist
     files:

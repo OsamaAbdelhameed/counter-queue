@@ -11,14 +11,14 @@ const App: React.FC = () => {
 	const [customers, setCustomers] = useState<Customer[]>([]);
 
 	async function fetchData() {
-		fetch("/api/counter/get")
+		fetch("https://main.d31his4iliekw7.amplifyapp.com/api/counter/get")
 			.then((response) => response.json())
 			.then((data) => {
 				setCounters(data.Counters);
 			})
 			.catch((error) => console.error(error));
 
-		fetch("/api/customer/get")
+		fetch("https://main.d31his4iliekw7.amplifyapp.com/api/customer/get")
 			.then((response) => response.json())
 			.then((data) => {
 				setCustomers(data.customers);
@@ -29,7 +29,9 @@ const App: React.FC = () => {
 	useEffect(() => {
 		fetchData();
 
-		const socket = new WebSocket("/ws");
+		const socket = new WebSocket(
+			"https://main.d31his4iliekw7.amplifyapp.com/ws"
+		);
 		socket.addEventListener("message", (event) => {
 			let newData = JSON.parse(event.data);
 			if (newData.ns.coll === "counters") {

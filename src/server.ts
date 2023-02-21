@@ -10,6 +10,8 @@ import customerRoutes from "./routes/Customer";
 
 const router = express();
 const server = new WebSocket.Server();
+console.log(server.path);
+console.log(server);
 
 mongoose
 	.connect(config.mongo.url, { retryWrites: true, w: "majority" })

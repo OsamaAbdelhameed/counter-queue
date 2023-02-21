@@ -79,7 +79,7 @@ const StartServer = () => {
 		return res.status(404).json({ message: error.message });
 	});
 
-	const server = new WebSocket.Server({ server: httpServer });
+	const socketServer = new WebSocket.Server({ server: httpServer });
 
 	// Watch the 'counters and customers' collection for changes
 	const countersCollection = mongoose.connection.collection("counters");
@@ -88,7 +88,7 @@ const StartServer = () => {
 	const customersCollection = mongoose.connection.collection("customers");
 	const customersCursor = customersCollection.watch();
 
-	server.on("connection", (socket: WebSocket) => {
+	socketServer.on("connection", (socket: WebSocket) => {
 		console.log("Client connected");
 
 		// Send a welcome message to the client
@@ -99,7 +99,7 @@ const StartServer = () => {
 			console.log("Change:", change);
 
 			// Notify all connected clients of the change
-			server.clients.forEach((client) => {
+			socketServer.clients.forEach((client) => {
 				if (client.readyState === WebSocket.OPEN) {
 					client.send(JSON.stringify(change));
 				}
@@ -111,7 +111,7 @@ const StartServer = () => {
 			console.log("Change:", change);
 
 			// Notify all connected clients of the change
-			server.clients.forEach((client) => {
+			socketServer.clients.forEach((client) => {
 				if (client.readyState === WebSocket.OPEN) {
 					client.send(JSON.stringify(change));
 				}

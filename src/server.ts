@@ -9,7 +9,7 @@ import counterRoutes from "./routes/Counter";
 import customerRoutes from "./routes/Customer";
 
 const router = express();
-const server = new WebSocket.Server({ port: 8080 });
+const httpServer = http.createServer(router);
 
 mongoose
 	.connect(config.mongo.url, { retryWrites: true, w: "majority" })
@@ -67,46 +67,6 @@ const StartServer = () => {
 	router.use("/counter", counterRoutes);
 	router.use("/customer", customerRoutes);
 
-	// Watch the 'counters and customers' collection for changes
-	const countersCollection = mongoose.connection.collection("counters");
-	const countersCursor = countersCollection.watch();
-
-	const customersCollection = mongoose.connection.collection("customers");
-	const customersCursor = customersCollection.watch();
-
-	server.on("connection", (socket: WebSocket) => {
-		console.log("Client connected successfully");
-
-		// Handle changes to the 'counters' collection
-		countersCursor.on("change", (change: any) => {
-			console.log("Change:", change);
-
-			// Notify all connected clients of the change
-			server.clients.forEach((client) => {
-				if (client.readyState === WebSocket.OPEN) {
-					client.send(JSON.stringify(change));
-				}
-			});
-		});
-
-		// Handle changes to the 'customers' collection
-		customersCursor.on("change", (change: any) => {
-			console.log("Change:", change);
-
-			// Notify all connected clients of the change
-			server.clients.forEach((client) => {
-				if (client.readyState === WebSocket.OPEN) {
-					client.send(JSON.stringify(change));
-				}
-			});
-		});
-
-		// Handle client disconnection
-		socket.on("close", () => {
-			console.log("Client disconnected");
-		});
-	});
-
 	/** Healthcheck */
 	router.get("/ping", (req, res, next) =>
 		res.status(200).json({ message: "pong" })
@@ -120,9 +80,51 @@ const StartServer = () => {
 		return res.status(404).json({ message: error.message });
 	});
 
-	http
-		.createServer(router)
-		.listen(config.server.port, () =>
-			Logging.info(`Server is running on port ${config.server.port}`)
-		);
+	const socketServer = new WebSocket.Server({ server: httpServer });
+
+	// Watch the 'counters and customers' collection for changes
+	const countersCollection = mongoose.connection.collection("counters");
+	const countersCursor = countersCollection.watch();
+
+	const customersCollection = mongoose.connection.collection("customers");
+	const customersCursor = customersCollection.watch();
+
+	socketServer.on("connection", (socket: WebSocket) => {
+		console.log("Client connected");
+
+		// Send a welcome message to the client
+		// socket.send("Welcome to the WebSocket server!");
+		// Handle changes to the 'counters' collection
+		countersCursor.on("change", (change: any) => {
+			console.log("Change:", change);
+
+			// Notify all connected clients of the change
+			socketServer.clients.forEach((client) => {
+				if (client.readyState === WebSocket.OPEN) {
+					client.send(JSON.stringify(change));
+				}
+			});
+		});
+
+		// Handle changes to the 'customers' collection
+		customersCursor.on("change", (change: any) => {
+			console.log("Change:", change);
+
+			// Notify all connected clients of the change
+			socketServer.clients.forEach((client) => {
+				if (client.readyState === WebSocket.OPEN) {
+					client.send(JSON.stringify(change));
+				}
+			});
+		});
+
+		// Handle client disconnection
+		socket.on("close", () => {
+			console.log("Client disconnected");
+		});
+	});
+
+	httpServer.listen(process.env.PORT, () =>
+		Logging.info(`Server is running on port ${process.env.PORT}`)
+	);
 };

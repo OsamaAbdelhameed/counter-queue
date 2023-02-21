@@ -21,6 +21,7 @@ mongoose
 		Logging.err("Unable to connect");
 		Logging.err(err);
 	});
+mongoose.set("strictQuery", false);
 
 /** Only start the server if its connected to mongo **/
 const StartServer = () => {
@@ -93,7 +94,6 @@ const StartServer = () => {
 
 		// Send a welcome message to the client
 		// socket.send("Welcome to the WebSocket server!");
-
 		// Handle changes to the 'counters' collection
 		countersCursor.on("change", (change: any) => {
 			console.log("Change:", change);

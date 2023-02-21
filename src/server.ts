@@ -124,7 +124,7 @@ const StartServer = () => {
 		});
 	});
 
-	httpServer.listen(process.env.SERVER_PORT, () =>
-		Logging.info(`Server is running on port ${process.env.SERVER_PORT}`)
+	httpServer.listen(process.env.PORT, () =>
+		Logging.info(`Server is running on port ${process.env.PORT}`)
 	);
 };

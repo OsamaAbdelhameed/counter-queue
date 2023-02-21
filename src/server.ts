@@ -9,9 +9,8 @@ import counterRoutes from "./routes/Counter";
 import customerRoutes from "./routes/Customer";
 
 const router = express();
-const server = new WebSocket.Server();
-console.log(server.path);
-console.log(server);
+const httpServer = http.createServer(router);
+const server = new WebSocket.Server({ server: httpServer });
 
 mongoose
 	.connect(config.mongo.url, { retryWrites: true, w: "majority" })
@@ -124,9 +123,7 @@ const StartServer = () => {
 		return res.status(404).json({ message: error.message });
 	});
 
-	http
-		.createServer(router)
-		.listen(process.env.PORT, () =>
-			Logging.info(`Server is running on port ${process.env.PORT}`)
-		);
+	httpServer.listen(process.env.SERVER_PORT, () =>
+		Logging.info(`Server is running on port ${process.env.SERVER_PORT}`)
+	);
 };

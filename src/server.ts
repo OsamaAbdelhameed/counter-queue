@@ -10,7 +10,6 @@ import customerRoutes from "./routes/Customer";
 
 const router = express();
 const httpServer = http.createServer(router);
-const server = new WebSocket.Server({ server: httpServer });
 
 mongoose
 	.connect(config.mongo.url, { retryWrites: true, w: "majority" })
@@ -67,6 +66,21 @@ const StartServer = () => {
 	router.use("/counter", counterRoutes);
 	router.use("/customer", customerRoutes);
 
+	/** Healthcheck */
+	router.get("/ping", (req, res, next) =>
+		res.status(200).json({ message: "pong" })
+	);
+
+	/** Error Handling */
+	router.use((req, res, next) => {
+		const error = new Error("not found");
+		Logging.err(error);
+
+		return res.status(404).json({ message: error.message });
+	});
+
+	const server = new WebSocket.Server({ server: httpServer });
+
 	// Watch the 'counters and customers' collection for changes
 	const countersCollection = mongoose.connection.collection("counters");
 	const countersCursor = countersCollection.watch();
@@ -108,19 +122,6 @@ const StartServer = () => {
 		socket.on("close", () => {
 			console.log("Client disconnected");
 		});
-	});
-
-	/** Healthcheck */
-	router.get("/ping", (req, res, next) =>
-		res.status(200).json({ message: "pong" })
-	);
-
-	/** Error Handling */
-	router.use((req, res, next) => {
-		const error = new Error("not found");
-		Logging.err(error);
-
-		return res.status(404).json({ message: error.message });
 	});
 
 	httpServer.listen(process.env.SERVER_PORT, () =>

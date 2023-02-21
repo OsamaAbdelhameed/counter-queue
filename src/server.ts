@@ -9,7 +9,7 @@ import counterRoutes from "./routes/Counter";
 import customerRoutes from "./routes/Customer";
 
 const router = express();
-const server = new WebSocket.Server({ port: 80 });
+const server = new WebSocket.Server();
 
 mongoose
 	.connect(config.mongo.url, { retryWrites: true, w: "majority" })

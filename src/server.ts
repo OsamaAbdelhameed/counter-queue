@@ -17,7 +17,7 @@ mongoose
 		Logging.info("connected to MongoDB");
 		StartServer();
 	})
-	.catch((err) => {
+	.catch((err: any) => {
 		Logging.err("Unable to connect");
 		Logging.err(err);
 	});
@@ -80,7 +80,7 @@ const StartServer = () => {
 		// socket.send("Welcome to the WebSocket server!");
 
 		// Handle changes to the 'counters' collection
-		countersCursor.on("change", (change) => {
+		countersCursor.on("change", (change: any) => {
 			console.log("Change:", change);
 
 			// Notify all connected clients of the change
@@ -92,7 +92,7 @@ const StartServer = () => {
 		});
 
 		// Handle changes to the 'customers' collection
-		customersCursor.on("change", (change) => {
+		customersCursor.on("change", (change: any) => {
 			console.log("Change:", change);
 
 			// Notify all connected clients of the change

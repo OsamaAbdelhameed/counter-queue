@@ -2,9 +2,10 @@
     "name": "counter-queue",
     "version": "1.0.0",
     "description": "",
-    "main": "index.js",
+    "main": "src/server.ts",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "start": "node dist/server.js",
+        "postinstall": "tsc"
     },
     "author": "",
     "license": "ISC",
@@ -29,6 +30,7 @@
     },
     "devDependencies": {
         "@types/express": "^4.17.17",
+        "@types/mongoose": "^5.11.97",
         "@types/ws": "^8.5.4"
     }
 }

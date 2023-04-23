@@ -11,14 +11,14 @@ const App: React.FC = () => {
 	const [customers, setCustomers] = useState<Customer[]>([]);
 
 	async function fetchData() {
-		fetch("https://main.d31his4iliekw7.amplifyapp.com/api/counter/get")
+		fetch("http://localhost:9090/counter/get")
 			.then((response) => response.json())
 			.then((data) => {
 				setCounters(data.Counters);
 			})
 			.catch((error) => console.error(error));
 
-		fetch("https://main.d31his4iliekw7.amplifyapp.com/api/customer/get")
+		fetch("http://localhost:9090/customer/get")
 			.then((response) => response.json())
 			.then((data) => {
 				setCustomers(data.customers);
@@ -29,9 +29,10 @@ const App: React.FC = () => {
 	useEffect(() => {
 		fetchData();
 
-		const socket = new WebSocket("ws://main.d31his4iliekw7.amplifyapp.com/ws");
+		const socket = new WebSocket("ws://localhost:8080");
 		socket.addEventListener("message", (event) => {
 			let newData = JSON.parse(event.data);
+			console.log(newData);
 			if (newData.ns.coll === "counters") {
 				counters.forEach((x, i) => {
 					if (x._id === newData.documentKey._id) {
@@ -44,13 +45,14 @@ const App: React.FC = () => {
 				});
 			} else if (newData.ns.coll === "customers") {
 				customers.forEach((x, i) => {
-					if (x._id === newData.documentKey._id) {
-						customers[i] = {
-							...customers[i],
-							...newData.updateDescription.updatedFields,
-						};
-						setCustomers([...customers]);
-					}
+					// if (x._id === newData.documentKey._id) {
+					console.log("yes entered");
+					customers[i] = {
+						...customers[i],
+						...newData.updateDescription.updatedFields,
+					};
+					setCustomers([...customers]);
+					// }
 				});
 			}
 		});
